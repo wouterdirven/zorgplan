@@ -31,12 +31,24 @@
     return item ? item.naam : "Onbekende hulpverlener";
   }
 
-  function formatDateTime(iso) {
-    if (!iso) {
-      return "";
+  function parseDatum(value) {
+    if (!value) {
+      return null;
     }
-    var date = new Date(iso);
+    var isoDag = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+    if (isoDag) {
+      return new Date(Number(isoDag[1]), Number(isoDag[2]) - 1, Number(isoDag[3]));
+    }
+    var date = new Date(value);
     if (Number.isNaN(date.getTime())) {
+      return null;
+    }
+    return date;
+  }
+
+  function formatDateTime(iso) {
+    var date = parseDatum(iso);
+    if (!date) {
       return "";
     }
     return new Intl.DateTimeFormat("nl-BE", {
@@ -50,12 +62,9 @@
   }
 
   function formatDate(value) {
-    if (!value) {
-      return "";
-    }
-    var date = new Date(value.length === 10 ? value + "T00:00:00" : value);
-    if (Number.isNaN(date.getTime())) {
-      return value;
+    var date = parseDatum(value);
+    if (!date) {
+      return value || "";
     }
     return new Intl.DateTimeFormat("nl-BE", {
       day: "numeric",

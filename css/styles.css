@@ -332,7 +332,6 @@ a:hover {
 
 .persoon-regel,
 .persoon-cijfers a {
-  display: block;
   text-decoration: none;
   min-height: 44px;
   display: flex;
@@ -621,8 +620,12 @@ a:hover {
     grid-template-columns: 1fr;
   }
 
-  .header-links {
-    display: none;
+  .site-header-inner {
+    flex-wrap: wrap;
+  }
+
+  .header-links a {
+    min-height: 44px;
   }
 
   .knoppen-rij .btn,
