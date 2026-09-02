@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zorgplan</title>
+  <meta
+    name="description"
+    content="Houd zelf bij welke hulp je krijgt. Jouw gegevens blijven op dit toestel."
+  />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#inhoud">Ga naar inhoud</a>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="site-naam" href="index.html">Zorgplan</a>
+      <nav class="header-links" aria-label="Secundair">
+        <a href="zorgverleners.html">Zorgverleners</a>
+        <a href="gegevens.html">Gegevens</a>
+      </nav>
+    </div>
+  </header>
+  <main id="inhoud" class="wrap">
+    <h1 class="page-titel">Zorgplan</h1>
+    <p class="privacy-lijn">Jouw gegevens blijven op dit toestel. Er wordt niets online bewaard.</p>
+
+    <section id="leeg-staat" class="leeg-staat" hidden>
+      <p>Zorgplan helpt je bijhouden welke hulp jij of je kind krijgt.</p>
+      <p>Je maakt een plan, zet er afspraken en vragen in, en neemt het mee naar je hulpverleners.</p>
+      <p>Alles blijft op dit toestel. Niemand anders kan het zien, tenzij jij het deelt.</p>
+      <button type="button" class="btn btn-primary btn-groot" id="maak-eerste">Maak je eerste plan</button>
+    </section>
+
+    <div id="gevuld-staat" hidden>
+      <a class="volgende-blok" id="volgende-afspraak" href="#personen">Volgende afspraak</a>
+      <section id="personen" aria-label="Plannen">
+        <div class="personen-lijst" id="personen-lijst"></div>
+      </section>
+      <div class="knoppen-rij">
+        <button type="button" class="btn btn-primary" id="nieuwe-persoon">Nieuwe persoon toevoegen</button>
+        <button type="button" class="btn btn-secondary" id="exporteer">Exporteer</button>
+        <button type="button" class="btn btn-secondary" id="importeer">Importeer</button>
+        <a class="btn btn-secondary" href="zorgverleners.html">Zorgverleners</a>
+        <a class="btn btn-secondary" href="gegevens.html">Gegevens</a>
+      </div>
+    </div>
+
+    <section class="paneel" id="export-paneel" hidden>
+      <p>Dit bestand bevat persoonlijke gegevens. Deel het enkel met mensen die je vertrouwt.</p>
+      <div class="actie-rij-inline">
+        <button type="button" class="btn btn-primary" id="export-bevestig">Download bestand</button>
+        <button type="button" class="btn btn-ghost" id="export-annuleer">Annuleren</button>
+      </div>
+    </section>
+
+    <section class="paneel" id="import-paneel" hidden>
+      <p id="import-status"></p>
+      <div class="actie-rij-inline">
+        <button type="button" class="btn btn-primary" id="import-voeg-toe">Voeg toe</button>
+        <button type="button" class="btn btn-secondary" id="import-vervang">Vervang alles</button>
+        <button type="button" class="btn btn-ghost" id="import-annuleer">Annuleren</button>
+      </div>
+    </section>
+    <input class="visueel-verborgen" id="import-bestand" type="file" accept="application/json,.json" />
+
+    <footer class="site-footer">
+      <p>
+        <a href="https://wouterdirven.github.io/hoe-werkt-de-zorg-in-vlaanderen/">Nog geen idee waar je moet zijn? Bezoek Hoe werkt de zorg in Vlaanderen</a>
+      </p>
+    </footer>
+  </main>
+  <script src="js/storage.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/overzicht.js"></script>
+</body>
+</html>

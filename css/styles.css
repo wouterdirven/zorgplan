@@ -1,0 +1,685 @@
+/* =========================================================================
+   Zorgplan — rustige, toegankelijke stijl, afgestemd op
+   "Hoe werkt de zorg in Vlaanderen".
+   Geen animaties, geen externe lettertypes.
+   ========================================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #f3f6f5;
+  --surface: #ffffff;
+  --surface-zacht: #f6faf9;
+  --border: rgba(14, 45, 42, 0.16);
+  --border-sterk: rgba(14, 45, 42, 0.28);
+  --text: #12211f;
+  --text-muted: #3d4f4c;
+  --primary: #0a5c62;
+  --primary-hover: #08474c;
+  --primary-zacht: #e4f3f3;
+  --groen: #14663d;
+  --groen-zacht: #e1f3e8;
+  --amber: #8a4b0f;
+  --amber-zacht: #fbeed9;
+  --gevaar: #8a1f1f;
+  --gevaar-zacht: #fdecec;
+  --focus: #0a5c62;
+  --radius: 0.75rem;
+  --radius-klein: 0.45rem;
+  --shadow: 0 1px 2px rgba(14, 45, 42, 0.05), 0 8px 20px rgba(14, 45, 42, 0.06);
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --max: 44rem;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100dvh;
+  line-height: 1.55;
+  font-size: 1.125rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--primary);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: -3rem;
+  z-index: 20;
+  background: var(--primary);
+  color: #fff;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-klein);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0.85rem 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.site-naam {
+  display: inline-block;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+.site-naam:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.header-links {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.header-links a {
+  font-weight: 600;
+  text-decoration: none;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.header-links a:hover {
+  text-decoration: underline;
+}
+
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 1.15rem 1.15rem 3.5rem;
+}
+
+.terug {
+  margin-bottom: 1rem;
+}
+
+.terug a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.page-titel {
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.55rem;
+}
+
+.privacy-lijn,
+.lead {
+  color: var(--text-muted);
+  margin-bottom: 1.15rem;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  border: none;
+  border-radius: var(--radius-klein);
+  padding: 0.7rem 1.25rem;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--text);
+  border: 1.5px solid var(--border-sterk);
+}
+
+.btn-secondary:hover {
+  background: var(--primary-zacht);
+  text-decoration: none;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  padding: 0.7rem 0.6rem;
+}
+
+.btn-ghost:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.btn-gevaar {
+  background: var(--gevaar);
+  color: #fff;
+}
+
+.btn-gevaar:hover {
+  background: #6e1818;
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-groot {
+  width: 100%;
+  min-height: 56px;
+  font-size: 1.15rem;
+}
+
+.actie-rij,
+.knoppen-rij {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.actie-rij-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+}
+
+.leeg-staat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.35rem 1.2rem;
+}
+
+.leeg-staat p {
+  margin-bottom: 0.7rem;
+}
+
+.volgende-blok {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  background: var(--primary-zacht);
+  border: 1.5px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 0.85rem 1rem;
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 0.85rem;
+}
+
+.volgende-blok:hover {
+  text-decoration: none;
+}
+
+.blok-kicker {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.blok-titel {
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.blok-meta {
+  color: var(--text-muted);
+}
+
+.personen-lijst {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.persoon-kaart,
+.lijst-kaart,
+.card,
+.paneel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 0.95rem 1.05rem;
+}
+
+.persoon-naam,
+.lijst-kaart h2,
+.lijst-kaart h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+  color: var(--primary);
+}
+
+.persoon-regel,
+.persoon-cijfers a {
+  display: block;
+  text-decoration: none;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.persoon-cijfers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin: 0.15rem 0 0.55rem;
+}
+
+.persoon-kaart .btn {
+  width: 100%;
+}
+
+.sectie {
+  margin-top: 1.5rem;
+}
+
+.sectie h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.leeg-regel {
+  color: var(--text-muted);
+  margin: 0.4rem 0 0.7rem;
+}
+
+.lijst-stapel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-bottom: 0.75rem;
+}
+
+.is-gedaan {
+  opacity: 0.72;
+}
+
+.vink-rij {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  min-height: 48px;
+}
+
+.vink-rij input[type="checkbox"] {
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-top: 0.35rem;
+  flex: 0 0 1.35rem;
+  accent-color: var(--primary);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.veld {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.veld label,
+.form-veld label {
+  font-weight: 600;
+}
+
+.veld input,
+.veld textarea,
+.veld select,
+.form input,
+.form textarea,
+.form select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.7rem 0.9rem;
+  font: inherit;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-klein);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.veld textarea,
+.form textarea {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+.veld input:focus-visible,
+.veld textarea:focus-visible,
+.veld select:focus-visible,
+.form input:focus-visible,
+.form textarea:focus-visible,
+.form select:focus-visible {
+  border-color: var(--primary);
+}
+
+.hint {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.paneel {
+  margin-top: 0.85rem;
+  background: var(--amber-zacht);
+  border-color: rgba(138, 75, 15, 0.28);
+}
+
+.paneel-gevaar {
+  background: var(--gevaar-zacht);
+  border-color: rgba(138, 31, 31, 0.28);
+}
+
+.site-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.visueel-verborgen {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.status {
+  margin-top: 0.75rem;
+  color: var(--groen);
+  font-weight: 600;
+}
+
+/* Printweergave (zelfde indeling als het papieren formulier) */
+
+.formulier {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.15rem 1.5rem;
+}
+
+.form-sectie {
+  margin-bottom: 1.35rem;
+  break-inside: avoid;
+}
+
+.form-sectie h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0.55rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.form-rij {
+  display: grid;
+  gap: 0.7rem;
+  margin-bottom: 0.7rem;
+}
+
+.form-rij-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.form-veld label {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.schrijflijn,
+.print-waarde {
+  min-height: 2rem;
+  border: none;
+  border-bottom: 1.5px solid var(--text);
+  padding-bottom: 0.15rem;
+}
+
+.schrijflijn-hoog,
+.print-tekst {
+  min-height: 3.2rem;
+  border: 1.5px solid var(--border-sterk);
+  border-radius: 2px;
+  padding: 0.45rem 0.55rem;
+  white-space: pre-wrap;
+}
+
+.form-tabel {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.form-tabel th,
+.form-tabel td {
+  border: 1px solid var(--text);
+  padding: 0.2rem 0.35rem;
+  vertical-align: top;
+  word-break: break-word;
+}
+
+.form-tabel th {
+  text-align: left;
+  font-size: 0.9rem;
+  background: var(--surface-zacht);
+}
+
+.form-tabel td {
+  height: 2.15rem;
+}
+
+.bespreek-blok {
+  margin-bottom: 0.75rem;
+}
+
+.bespreek-kop {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+.datumlijn {
+  flex: 1;
+  min-height: 1.7rem;
+  border-bottom: 1.5px solid var(--text);
+}
+
+.doe-lijst {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.doe-lijst li {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.55rem;
+}
+
+.vinkvak {
+  flex: 0 0 1.15rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 1.5px solid var(--text);
+  margin-bottom: 0.15rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vinkvak.is-aan::after {
+  content: "✓";
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.form-blad-footer {
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 560px) {
+  .form-rij-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .header-links {
+    display: none;
+  }
+
+  .knoppen-rij .btn,
+  .actie-rij .btn,
+  .persoon-kaart .btn {
+    width: 100%;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 12mm 12mm 16mm;
+}
+
+@media print {
+  .no-print,
+  .skip-link,
+  .site-header,
+  .terug,
+  .formulier-acties {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 11pt;
+  }
+
+  .wrap {
+    max-width: none;
+    padding: 0;
+  }
+
+  .formulier {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .form-sectie {
+    break-inside: avoid;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  .form-blad-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    font-size: 8.5pt;
+    color: #333;
+  }
+}

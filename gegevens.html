@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gegevens — Zorgplan</title>
+  <meta name="description" content="Exporteer, importeer of wis de gegevens van Zorgplan." />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#inhoud">Ga naar inhoud</a>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="site-naam" href="index.html">Zorgplan</a>
+    </div>
+  </header>
+  <main id="inhoud" class="wrap">
+    <p class="terug"><a href="index.html">Terug naar overzicht</a></p>
+    <h1 class="page-titel">Gegevens</h1>
+    <p>
+      Zorgplan bewaart alles alleen in de browser van dit toestel. Er is geen account en geen server. Let op: als je de browsergegevens wist, verdwijnen je plannen. Maak daarom regelmatig een export als back-up.
+    </p>
+
+    <section class="sectie">
+      <h2>Exporteer</h2>
+      <p>Download één JSON-bestand met alles.</p>
+      <button type="button" class="btn btn-primary" id="exporteer">Exporteer</button>
+      <div class="paneel" id="export-paneel" hidden>
+        <p>Dit bestand bevat persoonlijke gegevens. Deel het enkel met mensen die je vertrouwt.</p>
+        <div class="actie-rij-inline">
+          <button type="button" class="btn btn-primary" id="export-bevestig">Download bestand</button>
+          <button type="button" class="btn btn-ghost" id="export-annuleer">Annuleren</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="sectie">
+      <h2>Importeer</h2>
+      <p>Kies een bestand. Daarna kies je of je alles vervangt of het bestand toevoegt aan wat er al staat.</p>
+      <button type="button" class="btn btn-secondary" id="importeer">Kies een bestand</button>
+      <input class="visueel-verborgen" id="import-bestand" type="file" accept="application/json,.json" />
+      <div class="paneel" id="import-paneel" hidden>
+        <p id="import-status"></p>
+        <div class="actie-rij-inline">
+          <button type="button" class="btn btn-primary" id="import-voeg-toe">Voeg toe</button>
+          <button type="button" class="btn btn-secondary" id="import-vervang">Vervang alles</button>
+          <button type="button" class="btn btn-ghost" id="import-annuleer">Annuleren</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="sectie">
+      <h2>Wis alles</h2>
+      <p>Dit verwijdert alle personen, afspraken, notities, acties en vragen op dit toestel.</p>
+      <button type="button" class="btn btn-gevaar" id="wis-start">Wis alle gegevens</button>
+      <div class="paneel paneel-gevaar" id="wis-stap1" hidden>
+        <p>Weet je het zeker? Dit kan niet ongedaan. Maak eerst een export als je de gegevens nog nodig hebt.</p>
+        <div class="actie-rij-inline">
+          <button type="button" class="btn btn-secondary" id="wis-nee">Nee</button>
+          <button type="button" class="btn btn-gevaar" id="wis-verder">Ja, ga verder</button>
+        </div>
+      </div>
+      <div class="paneel paneel-gevaar" id="wis-stap2" hidden>
+        <p>Laatste bevestiging: alle plannen worden gewist.</p>
+        <div class="actie-rij-inline">
+          <button type="button" class="btn btn-secondary" id="wis-annuleer">Annuleren</button>
+          <button type="button" class="btn btn-gevaar" id="wis-nu">Wis alles nu</button>
+        </div>
+      </div>
+    </section>
+
+    <p class="status" id="gegevens-status" aria-live="polite"></p>
+  </main>
+  <script src="js/storage.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/gegevens.js"></script>
+</body>
+</html>
