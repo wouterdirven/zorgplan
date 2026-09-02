@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plan — Zorgplan</title>
+  <meta name="description" content="Het plan van één persoon: hulpverleners, afspraken, acties en vragen." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#inhoud">Ga naar inhoud</a>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="site-naam" href="index.html">Zorgplan</a>
+    </div>
+  </header>
+  <main id="inhoud" class="wrap">
+    <p class="terug"><a href="index.html">Terug naar overzicht</a></p>
+    <h1 class="page-titel" id="plan-titel">Mijn plan</h1>
+    <p class="hint">Vul in wat je wilt. Naam is niet verplicht. Alles wordt automatisch bewaard op dit toestel.</p>
+
+    <section class="sectie" id="over-mij">
+      <h2>Over mij</h2>
+      <form class="form card" id="over-mij-form">
+        <div class="veld">
+          <label for="naam">Naam <span class="muted">(niet verplicht)</span></label>
+          <input id="naam" name="naam" type="text" autocomplete="name" />
+        </div>
+        <div class="veld">
+          <label for="geboortedatum">Geboortedatum <span class="muted">(niet verplicht)</span></label>
+          <input id="geboortedatum" name="geboortedatum" type="date" />
+        </div>
+        <div class="veld">
+          <label for="notitie">Dit wil ik dat hulpverleners over mij weten</label>
+          <textarea id="notitie" name="notitie" rows="4"></textarea>
+        </div>
+      </form>
+    </section>
+
+    <section class="sectie" id="hulpverleners">
+      <h2>Mijn hulpverleners</h2>
+      <div class="lijst-stapel" id="hulpverleners-lijst"></div>
+      <div class="veld">
+        <label for="bestaande-hulpverlener">Kies uit de gedeelde lijst</label>
+        <select id="bestaande-hulpverlener"></select>
+      </div>
+      <div class="actie-rij-inline">
+        <button type="button" class="btn btn-secondary" id="koppel-hulpverlener">Voeg toe aan dit plan</button>
+        <button type="button" class="btn btn-secondary" id="toon-hulpverlener-form">Nieuwe hulpverlener</button>
+        <a class="btn btn-ghost" href="zorgverleners.html">Alle zorgverleners</a>
+      </div>
+      <form class="form card" id="nieuwe-hulpverlener-form" hidden>
+        <div class="veld">
+          <label for="hv-naam">Naam</label>
+          <input id="hv-naam" name="naam" type="text" required />
+        </div>
+        <div class="veld">
+          <label for="hv-organisatie">Organisatie</label>
+          <input id="hv-organisatie" name="organisatie" type="text" />
+        </div>
+        <div class="veld">
+          <label for="hv-contact">Telefoon of e-mail</label>
+          <input id="hv-contact" name="contact" type="text" />
+        </div>
+        <div class="veld">
+          <label for="hv-waarvoor">Waarvoor</label>
+          <input id="hv-waarvoor" name="waarvoor" type="text" />
+        </div>
+        <button type="submit" class="btn btn-primary">Bewaar hulpverlener</button>
+      </form>
+    </section>
+
+    <section class="sectie" id="afspraken">
+      <h2>Mijn afspraken</h2>
+      <div class="lijst-stapel" id="afspraken-lijst"></div>
+      <button type="button" class="btn btn-secondary" id="toon-afspraak-form">Voeg afspraak toe</button>
+      <form class="form card" id="afspraak-form" hidden>
+        <div class="veld">
+          <label for="afspraak-datum">Datum en uur</label>
+          <input id="afspraak-datum" name="datum" type="datetime-local" required />
+        </div>
+        <div class="veld">
+          <label for="afspraak-hv">Bij wie</label>
+          <select id="afspraak-hv" name="zorgverlenerId" data-zorgverleners data-leeg="Nog niet gekozen"></select>
+        </div>
+        <div class="veld">
+          <label for="afspraak-locatie">Waar</label>
+          <input id="afspraak-locatie" name="locatie" type="text" />
+        </div>
+        <button type="submit" class="btn btn-primary">Bewaar afspraak</button>
+      </form>
+    </section>
+
+    <section class="sectie" id="sessies">
+      <h2>Wat is er besproken</h2>
+      <div class="lijst-stapel" id="sessies-lijst"></div>
+      <button type="button" class="btn btn-secondary" id="toon-sessie-form">Voeg notitie toe</button>
+      <form class="form card" id="sessie-form" hidden>
+        <div class="veld">
+          <label for="sessie-datum">Datum</label>
+          <input id="sessie-datum" name="datum" type="date" required />
+        </div>
+        <div class="veld">
+          <label for="sessie-hv">Bij wie <span class="muted">(niet verplicht)</span></label>
+          <select id="sessie-hv" name="zorgverlenerId" data-zorgverleners data-leeg="Niet gekozen"></select>
+        </div>
+        <div class="veld">
+          <label for="sessie-tekst">Wat is er besproken</label>
+          <textarea id="sessie-tekst" name="tekst" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Bewaar notitie</button>
+      </form>
+    </section>
+
+    <section class="sectie" id="acties">
+      <h2>Wat ga ik doen</h2>
+      <div class="lijst-stapel" id="acties-lijst"></div>
+      <button type="button" class="btn btn-secondary" id="toon-actie-form">Voeg actie toe</button>
+      <form class="form card" id="actie-form" hidden>
+        <div class="veld">
+          <label for="actie-tekst">Actie</label>
+          <input id="actie-tekst" name="tekst" type="text" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Bewaar actie</button>
+      </form>
+    </section>
+
+    <section class="sectie" id="vragen">
+      <h2>Mijn vragen voor de volgende keer</h2>
+      <div class="lijst-stapel" id="vragen-lijst"></div>
+      <button type="button" class="btn btn-secondary" id="toon-vraag-form">Voeg vraag toe</button>
+      <form class="form card" id="vraag-form" hidden>
+        <div class="veld">
+          <label for="vraag-tekst">Vraag</label>
+          <textarea id="vraag-tekst" name="tekst" required></textarea>
+        </div>
+        <div class="veld">
+          <label for="vraag-hv">Voor welke hulpverlener <span class="muted">(niet verplicht)</span></label>
+          <select id="vraag-hv" name="zorgverlenerId" data-zorgverleners data-leeg="Niet gekozen"></select>
+        </div>
+        <button type="submit" class="btn btn-primary">Bewaar vraag</button>
+      </form>
+    </section>
+
+    <p class="actie-rij">
+      <a class="btn btn-primary" id="print-knop" href="print.html">Print dit plan</a>
+    </p>
+
+    <section class="sectie">
+      <button type="button" class="btn btn-ghost" id="toon-verwijder">Verwijder dit plan</button>
+      <div class="paneel paneel-gevaar" id="verwijder-stap1" hidden>
+        <p>Weet je het zeker? Afspraken, notities, acties en vragen van dit plan verdwijnen.</p>
+        <div class="actie-rij-inline">
+          <button type="button" class="btn btn-secondary" id="verwijder-nee">Nee</button>
+          <button type="button" class="btn btn-gevaar" id="verwijder-verder">Ja, ga verder</button>
+        </div>
+      </div>
+      <div class="paneel paneel-gevaar" id="verwijder-stap2" hidden>
+        <p>Laatste bevestiging: dit plan wordt gewist. Dit kan niet ongedaan.</p>
+        <div class="actie-rij-inline">
+          <button type="button" class="btn btn-secondary" id="verwijder-annuleer">Annuleren</button>
+          <button type="button" class="btn btn-gevaar" id="verwijder-nu">Wis dit plan nu</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="js/storage.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/persoon.js"></script>
+</body>
+</html>

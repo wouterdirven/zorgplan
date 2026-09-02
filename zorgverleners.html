@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zorgverleners — Zorgplan</title>
+  <meta name="description" content="De gedeelde lijst met zorgverleners." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#inhoud">Ga naar inhoud</a>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="site-naam" href="index.html">Zorgplan</a>
+    </div>
+  </header>
+  <main id="inhoud" class="wrap">
+    <p class="terug"><a href="index.html">Terug naar overzicht</a></p>
+    <h1 class="page-titel">Zorgverleners</h1>
+    <p class="lead">Deze lijst is gedeeld tussen alle plannen. Je koppelt een hulpverlener aan een persoon in diens plan.</p>
+
+    <div class="lijst-stapel" id="zorgverleners-lijst"></div>
+    <button type="button" class="btn btn-primary" id="toon-form">Nieuwe hulpverlener</button>
+
+    <form class="form card" id="zorgverlener-form" hidden>
+      <h2 id="form-titel">Nieuwe hulpverlener</h2>
+      <div class="veld">
+        <label for="zv-naam">Naam</label>
+        <input id="zv-naam" name="naam" type="text" required />
+      </div>
+      <div class="veld">
+        <label for="zv-organisatie">Organisatie</label>
+        <input id="zv-organisatie" name="organisatie" type="text" />
+      </div>
+      <div class="veld">
+        <label for="zv-contact">Telefoon of e-mail</label>
+        <input id="zv-contact" name="contact" type="text" />
+      </div>
+      <div class="veld">
+        <label for="zv-waarvoor">Waarvoor</label>
+        <input id="zv-waarvoor" name="waarvoor" type="text" />
+      </div>
+      <div class="actie-rij-inline">
+        <button type="submit" class="btn btn-primary">Bewaar</button>
+        <button type="button" class="btn btn-ghost" id="form-annuleer">Annuleren</button>
+      </div>
+    </form>
+
+    <section class="paneel paneel-gevaar" id="verwijder-paneel" hidden>
+      <p id="verwijder-tekst"></p>
+      <div class="actie-rij-inline">
+        <button type="button" class="btn btn-secondary" id="verwijder-annuleer">Annuleren</button>
+        <button type="button" class="btn btn-gevaar" id="verwijder-bevestig">Verwijder</button>
+      </div>
+    </section>
+  </main>
+  <script src="js/storage.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/zorgverleners.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Print plan — Zorgplan</title>
+  <meta name="description" content="Printvriendelijke weergave van één Zorgplan." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <a class="skip-link no-print" href="#inhoud">Ga naar inhoud</a>
+  <header class="site-header no-print">
+    <div class="site-header-inner">
+      <a class="site-naam" href="index.html">Zorgplan</a>
+    </div>
+  </header>
+  <main id="inhoud" class="wrap">
+    <p class="terug no-print"><a id="terug-plan" href="index.html">Terug naar het plan</a></p>
+    <div class="formulier-acties no-print actie-rij">
+      <button type="button" class="btn btn-primary" id="print-knop">Print dit plan</button>
+    </div>
+
+    <article class="formulier" aria-label="Formulier Mijn plan">
+      <h1 class="page-titel">Mijn plan</h1>
+
+      <section class="form-sectie">
+        <h2>Over mij</h2>
+        <div class="form-rij form-rij-2">
+          <div class="form-veld">
+            <label>Naam <span class="muted">(niet verplicht)</span></label>
+            <div class="print-waarde" id="print-naam"></div>
+          </div>
+          <div class="form-veld">
+            <label>Geboortedatum <span class="muted">(niet verplicht)</span></label>
+            <div class="print-waarde" id="print-geboortedatum"></div>
+          </div>
+        </div>
+        <div class="form-veld">
+          <label>Dit wil ik dat hulpverleners over mij weten.</label>
+          <div class="print-tekst" id="print-notitie"></div>
+        </div>
+      </section>
+
+      <section class="form-sectie">
+        <h2>Mijn hulpverleners</h2>
+        <table class="form-tabel">
+          <thead>
+            <tr>
+              <th>Naam</th>
+              <th>Organisatie</th>
+              <th>Telefoon of e-mail</th>
+              <th>Waarvoor</th>
+            </tr>
+          </thead>
+          <tbody id="print-hulpverleners"></tbody>
+        </table>
+      </section>
+
+      <section class="form-sectie">
+        <h2>Mijn afspraken</h2>
+        <table class="form-tabel">
+          <thead>
+            <tr>
+              <th>Datum en uur</th>
+              <th>Bij wie</th>
+              <th>Waar</th>
+            </tr>
+          </thead>
+          <tbody id="print-afspraken"></tbody>
+        </table>
+      </section>
+
+      <section class="form-sectie">
+        <h2>Wat is er besproken</h2>
+        <div id="print-sessies"></div>
+      </section>
+
+      <section class="form-sectie">
+        <h2>Wat ga ik doen</h2>
+        <ul class="doe-lijst" id="print-acties"></ul>
+      </section>
+
+      <section class="form-sectie">
+        <h2>Mijn vragen voor de volgende keer</h2>
+        <div id="print-vragen"></div>
+      </section>
+
+      <p class="form-blad-footer">Dit plan is van mij. Ik bepaal zelf wie dit ziet.</p>
+    </article>
+  </main>
+  <script src="js/storage.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/print.js"></script>
+</body>
+</html>
