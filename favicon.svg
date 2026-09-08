@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Zorgplan">
+  <rect width="32" height="32" rx="6" fill="#0a5c62"/>
+  <path fill="#fff" d="M15 7h2v18h-2z"/>
+  <path fill="#fff" d="M7 15h18v2H7z"/>
+</svg>
