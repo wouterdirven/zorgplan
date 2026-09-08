@@ -76,6 +76,13 @@
         </div>
         <button type="submit" class="btn btn-primary">Bewaar hulpverlener</button>
       </form>
+      <div class="paneel" id="los-paneel" hidden>
+        <p id="los-tekst"></p>
+        <div class="actie-rij-inline">
+          <button type="button" class="btn btn-secondary" id="los-annuleer">Annuleren</button>
+          <button type="button" class="btn btn-gevaar" id="los-bevestig">Haal uit dit plan</button>
+        </div>
+      </div>
     </section>
 
     <section class="sectie" id="afspraken">
@@ -160,13 +167,6 @@
 
     <section class="sectie">
       <button type="button" class="btn btn-ghost" id="toon-verwijder">Verwijder dit plan</button>
-      <div class="paneel" id="los-paneel" hidden>
-        <p id="los-tekst"></p>
-        <div class="actie-rij-inline">
-          <button type="button" class="btn btn-secondary" id="los-annuleer">Annuleren</button>
-          <button type="button" class="btn btn-gevaar" id="los-bevestig">Haal uit dit plan</button>
-        </div>
-      </div>
       <div class="paneel paneel-gevaar" id="verwijder-stap1" hidden>
         <p>Weet je het zeker? Afspraken, notities, acties en vragen van dit plan verdwijnen.</p>
         <div class="actie-rij-inline">

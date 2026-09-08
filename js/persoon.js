@@ -533,6 +533,7 @@
             "."
           : "Deze hulpverlener verdwijnt uit dit plan. De gedeelde lijst blijft behouden.";
         Zorgplan.toggleHidden($("#los-paneel"), false);
+        $("#los-paneel").scrollIntoView({ block: "nearest", behavior: "auto" });
         return;
       }
       if (actie === "afspraak-verwijder") {
