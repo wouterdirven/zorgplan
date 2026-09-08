@@ -10,7 +10,9 @@
 
   function downloadExport() {
     Zorgplan.downloadText(Zorgplan.exportBestandsnaam(), storage.exportJSON());
+    storage.markExported();
     Zorgplan.toggleHidden($("#export-paneel"), true);
+    Zorgplan.toonSysteemBanner();
   }
 
   function startImport() {
@@ -40,17 +42,21 @@
     var json = $("#import-paneel").dataset.json || "";
     try {
       storage.importJSON(json, mode);
+      if (!storage.getOpslagStatus().ok) {
+        Zorgplan.setStatus($("#import-status"), "Importeren is niet bewaard. Controleer of deze browser gegevens mag opslaan.");
+        Zorgplan.toonSysteemBanner();
+        return;
+      }
       Zorgplan.toggleHidden($("#import-paneel"), true);
       $("#import-paneel").dataset.json = "";
       Zorgplan.setStatus($("#gegevens-status"), "Import gelukt.");
+      Zorgplan.toonSysteemBanner();
     } catch (error) {
       Zorgplan.setStatus($("#import-status"), error.message || "Importeren is mislukt.");
     }
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    Zorgplan.registerServiceWorker();
-
     $("#exporteer").addEventListener("click", toonExportWaarschuwing);
     $("#export-bevestig").addEventListener("click", downloadExport);
     $("#export-annuleer").addEventListener("click", function () {
@@ -88,6 +94,7 @@
       storage.clearAll();
       Zorgplan.toggleHidden($("#wis-stap2"), true);
       Zorgplan.setStatus($("#gegevens-status"), "Alle gegevens zijn gewist.");
+      Zorgplan.toonSysteemBanner();
     });
   });
 })();

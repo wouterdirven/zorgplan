@@ -6,7 +6,18 @@
   "use strict";
 
   var STORAGE_KEY = "zorgplan";
+  var META_KEY = "zorgplan-meta";
   var CURRENT_VERSION = 1;
+  var ruweInhoud = null;
+  var laatsteSchrijfFout = "";
+  var laatsteStatus = {
+    beschikbaar: true,
+    ok: true,
+    corrupt: false,
+    reden: "",
+    heeftGegevens: false,
+    laatstGeexporteerd: ""
+  };
 
   function generateId() {
     if (global.crypto && typeof global.crypto.randomUUID === "function") {
@@ -94,8 +105,62 @@
       id: asString(item && item.id) || generateId(),
       persoonId: asString(item && item.persoonId),
       zorgverlenerId: asString(item && item.zorgverlenerId),
-      tekst: asString(item && item.tekst)
+      tekst: asString(item && item.tekst),
+      gedaan: asBoolean(item && item.gedaan)
     };
+  }
+
+  function loadMeta() {
+    var backend = getBackend();
+    var fallback = { laatstGeexporteerd: "" };
+    if (!backend) {
+      return fallback;
+    }
+    try {
+      var raw = backend.getItem(META_KEY);
+      if (!raw) {
+        return fallback;
+      }
+      var parsed = JSON.parse(raw);
+      return {
+        laatstGeexporteerd: asString(parsed && parsed.laatstGeexporteerd)
+      };
+    } catch (error) {
+      return fallback;
+    }
+  }
+
+  function saveMeta(meta) {
+    var backend = getBackend();
+    if (!backend) {
+      return;
+    }
+    try {
+      backend.setItem(META_KEY, JSON.stringify(meta));
+    } catch (error) {
+      /* Meta is hulpinformatie; een mislukte schrijf mag de app niet stoppen. */
+    }
+  }
+
+  function heeftInhoud(data) {
+    return !!(
+      data &&
+      (data.personen.length ||
+        data.zorgverleners.length ||
+        data.afspraken.length ||
+        data.sessies.length ||
+        data.acties.length ||
+        data.vragen.length)
+    );
+  }
+
+  function isQuotaFout(error) {
+    return !!(
+      error &&
+      (error.name === "QuotaExceededError" ||
+        error.name === "NS_ERROR_DOM_QUOTA_REACHED" ||
+        error.code === 22)
+    );
   }
 
   function normalize(raw) {
@@ -123,28 +188,103 @@
 
   function loadData() {
     var backend = getBackend();
+    var meta = loadMeta();
+    laatsteStatus.laatstGeexporteerd = meta.laatstGeexporteerd;
+    laatsteStatus.corrupt = false;
+    ruweInhoud = null;
     if (!backend) {
+      laatsteStatus.beschikbaar = false;
+      laatsteStatus.ok = false;
+      laatsteStatus.reden = "prive";
+      laatsteStatus.heeftGegevens = false;
       return emptyData();
     }
+    laatsteStatus.beschikbaar = true;
     try {
       var raw = backend.getItem(STORAGE_KEY);
       if (!raw) {
+        laatsteStatus.ok = true;
+        laatsteStatus.reden = "";
+        laatsteStatus.heeftGegevens = false;
         return emptyData();
       }
-      return normalize(JSON.parse(raw));
+      ruweInhoud = raw;
+      var data = normalize(JSON.parse(raw));
+      laatsteStatus.ok = true;
+      laatsteStatus.reden = "";
+      laatsteStatus.heeftGegevens = heeftInhoud(data);
+      return data;
     } catch (error) {
+      laatsteStatus.ok = false;
+      laatsteStatus.corrupt = !!ruweInhoud;
+      laatsteStatus.reden = ruweInhoud ? "corrupt" : "mislukt";
+      laatsteStatus.heeftGegevens = !!ruweInhoud;
       return emptyData();
     }
   }
 
-  function saveData(data) {
-    var backend = getBackend();
+  function saveData(data, opties) {
     var normalized = normalize(data);
-    if (!backend) {
+    var force = !!(opties && opties.force);
+    if (laatsteStatus.corrupt && !force) {
+      laatsteStatus.ok = false;
+      laatsteStatus.reden = "corrupt";
       return normalized;
     }
-    backend.setItem(STORAGE_KEY, JSON.stringify(normalized));
+    var backend = getBackend();
+    if (!backend) {
+      laatsteStatus.beschikbaar = false;
+      laatsteStatus.ok = false;
+      laatsteStatus.reden = "prive";
+      laatsteSchrijfFout = "prive";
+      laatsteStatus.heeftGegevens = heeftInhoud(normalized);
+      return normalized;
+    }
+    try {
+      backend.setItem(STORAGE_KEY, JSON.stringify(normalized));
+      ruweInhoud = null;
+      laatsteSchrijfFout = "";
+      laatsteStatus.beschikbaar = true;
+      laatsteStatus.ok = true;
+      laatsteStatus.corrupt = false;
+      laatsteStatus.reden = "";
+      laatsteStatus.heeftGegevens = heeftInhoud(normalized);
+    } catch (error) {
+      laatsteSchrijfFout = isQuotaFout(error) ? "vol" : "mislukt";
+      laatsteStatus.beschikbaar = false;
+      laatsteStatus.ok = false;
+      laatsteStatus.reden = laatsteSchrijfFout;
+      laatsteStatus.heeftGegevens = heeftInhoud(normalized);
+    }
     return normalized;
+  }
+
+  function getOpslagStatus() {
+    var meta = loadMeta();
+    var kopie = {
+      beschikbaar: laatsteStatus.beschikbaar,
+      ok: laatsteStatus.ok && !laatsteSchrijfFout,
+      corrupt: laatsteStatus.corrupt,
+      reden: laatsteSchrijfFout || laatsteStatus.reden,
+      heeftGegevens: laatsteStatus.heeftGegevens,
+      laatstGeexporteerd: meta.laatstGeexporteerd || laatsteStatus.laatstGeexporteerd
+    };
+    if (kopie.heeftGegevens && !kopie.laatstGeexporteerd) {
+      kopie.exportNodig = true;
+    } else if (kopie.heeftGegevens && kopie.laatstGeexporteerd) {
+      var geexporteerd = new Date(kopie.laatstGeexporteerd).getTime();
+      kopie.exportNodig = Number.isNaN(geexporteerd) || Date.now() - geexporteerd > 7 * 24 * 60 * 60 * 1000;
+    } else {
+      kopie.exportNodig = false;
+    }
+    return kopie;
+  }
+
+  function markExported() {
+    var meta = loadMeta();
+    meta.laatstGeexporteerd = new Date().toISOString();
+    saveMeta(meta);
+    laatsteStatus.laatstGeexporteerd = meta.laatstGeexporteerd;
   }
 
   function update(mutator) {
@@ -170,6 +310,9 @@
   }
 
   function exportJSON() {
+    if (laatsteStatus.corrupt && ruweInhoud) {
+      return ruweInhoud;
+    }
     return JSON.stringify(loadData(), null, 2);
   }
 
@@ -256,7 +399,8 @@
     }
     var incoming = normalize(parsed);
     if (mode === "replace") {
-      return saveData(incoming);
+      laatsteStatus.corrupt = false;
+      return saveData(incoming, { force: true });
     }
     if (mode !== "merge") {
       throw new Error("Onbekende importmodus.");
@@ -273,7 +417,8 @@
   }
 
   function clearAll() {
-    return saveData(emptyData());
+    laatsteStatus.corrupt = false;
+    return saveData(emptyData(), { force: true });
   }
 
   function linkZorgverlener(data, zorgverlenerId, persoonId) {
@@ -336,7 +481,7 @@
 
   function openstaandeVragen(data, persoonId) {
     return data.vragen.filter(function (item) {
-      return item.persoonId === persoonId;
+      return item.persoonId === persoonId && !item.gedaan;
     });
   }
 
@@ -346,6 +491,8 @@
     emptyData: emptyData,
     loadData: loadData,
     saveData: saveData,
+    getOpslagStatus: getOpslagStatus,
+    markExported: markExported,
     exportJSON: exportJSON,
     importJSON: importJSON,
     clearAll: clearAll,
@@ -430,6 +577,18 @@
       });
     },
 
+    unlinkZorgverlenerFromPersoon: function (zorgverlenerId, persoonId) {
+      update(function (data) {
+        var zorgverlener = findById(data.zorgverleners, zorgverlenerId);
+        if (!zorgverlener) {
+          return;
+        }
+        zorgverlener.persoonIds = zorgverlener.persoonIds.filter(function (id) {
+          return id !== persoonId;
+        });
+      });
+    },
+
     deleteZorgverlener: function (id) {
       update(function (data) {
         data.zorgverleners = removeById(data.zorgverleners, id);
@@ -489,6 +648,20 @@
       return sessie;
     },
 
+    updateSessie: function (id, velden) {
+      var updated = null;
+      update(function (data) {
+        var sessie = findById(data.sessies, id);
+        if (!sessie) {
+          return;
+        }
+        Object.assign(sessie, normalizeSessie(Object.assign({}, sessie, velden, { id: sessie.id })));
+        linkZorgverlener(data, sessie.zorgverlenerId, sessie.persoonId);
+        updated = sessie;
+      });
+      return updated;
+    },
+
     deleteSessie: function (id) {
       update(function (data) {
         data.sessies = removeById(data.sessies, id);
@@ -529,6 +702,20 @@
         linkZorgverlener(data, vraag.zorgverlenerId, vraag.persoonId);
       });
       return vraag;
+    },
+
+    updateVraag: function (id, velden) {
+      var updated = null;
+      update(function (data) {
+        var vraag = findById(data.vragen, id);
+        if (!vraag) {
+          return;
+        }
+        Object.assign(vraag, normalizeVraag(Object.assign({}, vraag, velden, { id: vraag.id })));
+        linkZorgverlener(data, vraag.zorgverlenerId, vraag.persoonId);
+        updated = vraag;
+      });
+      return updated;
     },
 
     deleteVraag: function (id) {

@@ -1,4 +1,4 @@
-const CACHE = "zorgplan-v2";
+const CACHE = "zorgplan-v3";
 const FILES = [
   "./",
   "./index.html",
@@ -6,7 +6,13 @@ const FILES = [
   "./zorgverleners.html",
   "./gegevens.html",
   "./print.html",
+  "./over.html",
+  "./404.html",
   "./favicon.svg",
+  "./icon-180.png",
+  "./icon-192.png",
+  "./icon-512.png",
+  "./manifest.json",
   "./css/styles.css",
   "./js/storage.js",
   "./js/common.js",

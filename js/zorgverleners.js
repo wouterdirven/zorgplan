@@ -77,8 +77,6 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    Zorgplan.registerServiceWorker();
-
     $("#toon-form").addEventListener("click", function () {
       toonForm(null);
     });

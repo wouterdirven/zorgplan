@@ -5,7 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gegevens — Zorgplan</title>
   <meta name="description" content="Exporteer, importeer of wis de gegevens van Zorgplan." />
+  <meta name="theme-color" content="#0a5c62" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Zorgplan" />
+  <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon-180.png" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -15,12 +21,17 @@
       <a class="site-naam" href="index.html">Zorgplan</a>
     </div>
   </header>
+  <div id="systeem-banner" class="banner" hidden></div>
   <main id="inhoud" class="wrap">
     <p class="terug"><a href="index.html">Terug naar overzicht</a></p>
     <h1 class="page-titel">Gegevens</h1>
     <p>
       Zorgplan bewaart alles alleen in de browser van dit toestel. Er is geen account en geen server. Let op: als je de browsergegevens wist, verdwijnen je plannen. Maak daarom regelmatig een export als back-up.
     </p>
+    <section id="beginscherm-hint" class="paneel" hidden>
+      <p>Op iPhone of iPad: tik op Delen en kies <strong>Zet op beginscherm</strong>. Dan blijft je plan beter bewaard.</p>
+      <button type="button" class="btn btn-ghost" id="beginscherm-hint-weg">Verbergen</button>
+    </section>
 
     <section class="sectie">
       <h2>Exporteer</h2>
@@ -71,6 +82,15 @@
     </section>
 
     <p class="status" id="gegevens-status" aria-live="polite"></p>
+
+    <footer class="site-footer">
+      <p>Dit is geen medisch dossier en geen officiële overheidsapp. Jij bepaalt zelf wie jouw plan ziet.</p>
+      <p>
+        <a href="over.html">Over deze app</a>
+        ·
+        <a href="https://github.com/wouterdirven/zorgplan">Broncode op GitHub</a>
+      </p>
+    </footer>
   </main>
   <script src="js/storage.js"></script>
   <script src="js/common.js"></script>

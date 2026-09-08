@@ -121,7 +121,7 @@
     }
 
     var vragen = data.vragen.filter(function (item) {
-      return item.persoonId === persoonId;
+      return item.persoonId === persoonId && !item.gedaan;
     });
     var vraagBlok = $("#print-vragen");
     if (vragen.length === 0) {

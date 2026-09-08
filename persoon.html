@@ -5,7 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Plan — Zorgplan</title>
   <meta name="description" content="Het plan van één persoon: hulpverleners, afspraken, acties en vragen." />
+  <meta name="theme-color" content="#0a5c62" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Zorgplan" />
+  <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon-180.png" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -15,6 +21,7 @@
       <a class="site-naam" href="index.html">Zorgplan</a>
     </div>
   </header>
+  <div id="systeem-banner" class="banner" hidden></div>
   <main id="inhoud" class="wrap">
     <p class="terug"><a href="index.html">Terug naar overzicht</a></p>
     <h1 class="page-titel" id="plan-titel">Mijn plan</h1>
@@ -89,6 +96,7 @@
           <input id="afspraak-locatie" name="locatie" type="text" />
         </div>
         <button type="submit" class="btn btn-primary">Bewaar afspraak</button>
+        <button type="button" class="btn btn-ghost form-annuleer">Annuleren</button>
       </form>
     </section>
 
@@ -110,6 +118,7 @@
           <textarea id="sessie-tekst" name="tekst" required></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Bewaar notitie</button>
+        <button type="button" class="btn btn-ghost form-annuleer">Annuleren</button>
       </form>
     </section>
 
@@ -123,6 +132,7 @@
           <input id="actie-tekst" name="tekst" type="text" required />
         </div>
         <button type="submit" class="btn btn-primary">Bewaar actie</button>
+        <button type="button" class="btn btn-ghost form-annuleer">Annuleren</button>
       </form>
     </section>
 
@@ -140,6 +150,7 @@
           <select id="vraag-hv" name="zorgverlenerId" data-zorgverleners data-leeg="Niet gekozen"></select>
         </div>
         <button type="submit" class="btn btn-primary">Bewaar vraag</button>
+        <button type="button" class="btn btn-ghost form-annuleer">Annuleren</button>
       </form>
     </section>
 
@@ -149,6 +160,13 @@
 
     <section class="sectie">
       <button type="button" class="btn btn-ghost" id="toon-verwijder">Verwijder dit plan</button>
+      <div class="paneel" id="los-paneel" hidden>
+        <p id="los-tekst"></p>
+        <div class="actie-rij-inline">
+          <button type="button" class="btn btn-secondary" id="los-annuleer">Annuleren</button>
+          <button type="button" class="btn btn-gevaar" id="los-bevestig">Haal uit dit plan</button>
+        </div>
+      </div>
       <div class="paneel paneel-gevaar" id="verwijder-stap1" hidden>
         <p>Weet je het zeker? Afspraken, notities, acties en vragen van dit plan verdwijnen.</p>
         <div class="actie-rij-inline">
@@ -164,6 +182,15 @@
         </div>
       </div>
     </section>
+
+    <footer class="site-footer">
+      <p>Dit is geen medisch dossier en geen officiële overheidsapp. Jij bepaalt zelf wie jouw plan ziet.</p>
+      <p>
+        <a href="over.html">Over deze app</a>
+        ·
+        <a href="gegevens.html">Back-up</a>
+      </p>
+    </footer>
   </main>
   <script src="js/storage.js"></script>
   <script src="js/common.js"></script>

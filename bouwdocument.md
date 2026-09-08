@@ -46,7 +46,7 @@ zorgplan
 ├── acties []  ("Wat ga ik doen")
 │   └── id, persoonId, tekst, gedaan (ja/nee)
 └── vragen []  ("Mijn vragen voor de volgende keer")
-    └── id, persoonId, zorgverlenerId (optioneel), tekst
+    └── id, persoonId, zorgverlenerId (optioneel), tekst, gedaan (ja/nee)
 ```
 
 ---

@@ -87,6 +87,10 @@
 
   function nieuwePersoon() {
     var persoon = storage.addPersoon({ naam: "" });
+    if (!storage.getOpslagStatus().ok) {
+      Zorgplan.toonSysteemBanner();
+      return;
+    }
     window.location.href = "persoon.html?id=" + encodeURIComponent(persoon.id);
   }
 
@@ -97,7 +101,9 @@
 
   function downloadExport() {
     Zorgplan.downloadText(Zorgplan.exportBestandsnaam(), storage.exportJSON());
+    storage.markExported();
     Zorgplan.toggleHidden($("#export-paneel"), true);
+    Zorgplan.toonSysteemBanner();
   }
 
   function startImport() {
@@ -127,16 +133,21 @@
     var json = $("#import-paneel").dataset.json || "";
     try {
       storage.importJSON(json, mode);
+      if (!storage.getOpslagStatus().ok) {
+        Zorgplan.setStatus($("#import-status"), "Importeren is niet bewaard. Controleer of deze browser gegevens mag opslaan.");
+        Zorgplan.toonSysteemBanner();
+        return;
+      }
       Zorgplan.toggleHidden($("#import-paneel"), true);
       $("#import-paneel").dataset.json = "";
       render();
+      Zorgplan.toonSysteemBanner();
     } catch (error) {
       Zorgplan.setStatus($("#import-status"), error.message || "Importeren is mislukt.");
     }
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    Zorgplan.registerServiceWorker();
     $("#maak-eerste").addEventListener("click", nieuwePersoon);
     $("#nieuwe-persoon").addEventListener("click", nieuwePersoon);
     $("#exporteer").addEventListener("click", toonExportWaarschuwing);

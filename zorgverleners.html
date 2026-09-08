@@ -5,7 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zorgverleners — Zorgplan</title>
   <meta name="description" content="De gedeelde lijst met zorgverleners." />
+  <meta name="theme-color" content="#0a5c62" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Zorgplan" />
+  <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon-180.png" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -15,6 +21,7 @@
       <a class="site-naam" href="index.html">Zorgplan</a>
     </div>
   </header>
+  <div id="systeem-banner" class="banner" hidden></div>
   <main id="inhoud" class="wrap">
     <p class="terug"><a href="index.html">Terug naar overzicht</a></p>
     <h1 class="page-titel">Zorgverleners</h1>
@@ -54,6 +61,15 @@
         <button type="button" class="btn btn-gevaar" id="verwijder-bevestig">Verwijder</button>
       </div>
     </section>
+
+    <footer class="site-footer">
+      <p>Dit is geen medisch dossier en geen officiële overheidsapp. Jij bepaalt zelf wie jouw plan ziet.</p>
+      <p>
+        <a href="over.html">Over deze app</a>
+        ·
+        <a href="gegevens.html">Back-up</a>
+      </p>
+    </footer>
   </main>
   <script src="js/storage.js"></script>
   <script src="js/common.js"></script>

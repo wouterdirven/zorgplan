@@ -8,7 +8,18 @@
     name="description"
     content="Houd zelf bij welke hulp je krijgt. Jouw gegevens blijven op dit toestel."
   />
+  <meta name="theme-color" content="#0a5c62" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Zorgplan" />
+  <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon-180.png" />
+  <meta property="og:title" content="Zorgplan" />
+  <meta property="og:description" content="Houd zelf bij welke hulp je krijgt. Jouw gegevens blijven op dit toestel." />
+  <meta property="og:image" content="https://wouterdirven.github.io/zorgplan/icon-512.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="nl_BE" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -22,9 +33,15 @@
       </nav>
     </div>
   </header>
+  <div id="systeem-banner" class="banner" hidden></div>
   <main id="inhoud" class="wrap">
     <h1 class="page-titel">Zorgplan</h1>
     <p class="privacy-lijn">Jouw gegevens blijven op dit toestel. Er wordt niets online bewaard.</p>
+
+    <section id="beginscherm-hint" class="paneel" hidden>
+      <p>Op iPhone of iPad: tik op Delen en kies <strong>Zet op beginscherm</strong>. Dan blijft je plan beter bewaard.</p>
+      <button type="button" class="btn btn-ghost" id="beginscherm-hint-weg">Verbergen</button>
+    </section>
 
     <section id="leeg-staat" class="leeg-staat" hidden>
       <p>Zorgplan helpt je bijhouden welke hulp jij of je kind krijgt.</p>
@@ -66,8 +83,13 @@
     <input class="visueel-verborgen" id="import-bestand" type="file" accept="application/json,.json" />
 
     <footer class="site-footer">
+      <p>Dit is geen medisch dossier en geen officiële overheidsapp. Jij bepaalt zelf wie jouw plan ziet.</p>
       <p>
-        <a href="https://wouterdirven.github.io/hoe-werkt-de-zorg-in-vlaanderen/">Nog geen idee waar je moet zijn? Bezoek Hoe werkt de zorg in Vlaanderen</a>
+        <a href="over.html">Over deze app</a>
+        ·
+        <a href="gegevens.html">Back-up</a>
+        ·
+        <a href="https://wouterdirven.github.io/hoe-werkt-de-zorg-in-vlaanderen/">Hoe werkt de zorg in Vlaanderen</a>
       </p>
     </footer>
   </main>

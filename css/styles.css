@@ -464,6 +464,48 @@ a:hover {
   border-top: 1px solid var(--border);
 }
 
+.site-footer p {
+  color: var(--text-muted);
+  margin-bottom: 0.45rem;
+}
+
+.banner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0.85rem 1.15rem;
+  font-weight: 600;
+}
+
+.banner a {
+  font-weight: 700;
+}
+
+.banner-gevaar {
+  background: var(--gevaar-zacht);
+  color: var(--gevaar);
+  border-bottom: 1px solid rgba(138, 31, 31, 0.28);
+}
+
+.banner-amber {
+  background: var(--amber-zacht);
+  color: var(--amber);
+  border-bottom: 1px solid rgba(138, 75, 15, 0.28);
+}
+
+.banner-weg {
+  min-height: 40px;
+  padding: 0.2rem 0.4rem;
+}
+
+.card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.55rem;
+}
+
+.card p + p {
+  margin-top: 0.7rem;
+}
+
 .visueel-verborgen {
   position: absolute;
   width: 1px;
@@ -641,11 +683,14 @@ a:hover {
 }
 
 @media print {
-  .no-print,
-  .skip-link,
-  .site-header,
-  .terug,
-  .formulier-acties {
+.no-print,
+.skip-link,
+.site-header,
+.terug,
+.formulier-acties,
+.banner {
+  display: none !important;
+}
     display: none !important;
   }
 
