@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="nl-BE">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -36,7 +36,18 @@
         </div>
         <div class="veld">
           <label for="geboortedatum">Geboortedatum <span class="muted">(niet verplicht)</span></label>
-          <input id="geboortedatum" name="geboortedatum" type="date" />
+          <input
+            id="geboortedatum"
+            name="geboortedatum"
+            type="text"
+            inputmode="numeric"
+            autocomplete="bday"
+            placeholder="dd/mm/jjjj"
+            maxlength="10"
+            data-eu-datum
+            aria-describedby="geboortedatum-hint"
+          />
+          <p class="hint" id="geboortedatum-hint">Dag / maand / jaar, bijvoorbeeld 17/09/2010</p>
         </div>
         <div class="veld">
           <label for="notitie">Dit wil ik dat hulpverleners over mij weten</label>
@@ -90,9 +101,39 @@
       <div class="lijst-stapel" id="afspraken-lijst"></div>
       <button type="button" class="btn btn-secondary" id="toon-afspraak-form">Voeg afspraak toe</button>
       <form class="form card" id="afspraak-form" hidden>
-        <div class="veld">
-          <label for="afspraak-datum">Datum en uur</label>
-          <input id="afspraak-datum" name="datum" type="datetime-local" required />
+        <div class="datum-tijd-rij">
+          <div class="veld">
+            <label for="afspraak-datum">Datum</label>
+            <input
+              id="afspraak-datum"
+              name="datum"
+              type="text"
+              inputmode="numeric"
+              autocomplete="off"
+              placeholder="dd/mm/jjjj"
+              maxlength="10"
+              required
+              data-eu-datum
+              aria-describedby="afspraak-datum-hint"
+            />
+            <p class="hint" id="afspraak-datum-hint">Dag / maand / jaar, bijvoorbeeld 17/09/2026</p>
+          </div>
+          <div class="veld">
+            <label for="afspraak-uur">Uur</label>
+            <input
+              id="afspraak-uur"
+              name="uur"
+              type="text"
+              inputmode="numeric"
+              autocomplete="off"
+              placeholder="uu:mm"
+              maxlength="5"
+              required
+              data-eu-tijd
+              aria-describedby="afspraak-uur-hint"
+            />
+            <p class="hint" id="afspraak-uur-hint">24-uursklok, bijvoorbeeld 14:30</p>
+          </div>
         </div>
         <div class="veld">
           <label for="afspraak-hv">Bij wie</label>
@@ -114,7 +155,19 @@
       <form class="form card" id="sessie-form" hidden>
         <div class="veld">
           <label for="sessie-datum">Datum</label>
-          <input id="sessie-datum" name="datum" type="date" required />
+          <input
+            id="sessie-datum"
+            name="datum"
+            type="text"
+            inputmode="numeric"
+            autocomplete="off"
+            placeholder="dd/mm/jjjj"
+            maxlength="10"
+            required
+            data-eu-datum
+            aria-describedby="sessie-datum-hint"
+          />
+          <p class="hint" id="sessie-datum-hint">Dag / maand / jaar, bijvoorbeeld 17/09/2026</p>
         </div>
         <div class="veld">
           <label for="sessie-hv">Bij wie <span class="muted">(niet verplicht)</span></label>
