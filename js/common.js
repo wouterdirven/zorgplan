@@ -381,7 +381,7 @@
 
   function opslagBericht(status) {
     if (status.corrupt) {
-      return "Je opgeslagen plan is beschadigd. Exporteer het bestand als je het nog kunt, en zet daarna een back-up terug via Gegevens.";
+      return "Je opgeslagen plan is beschadigd. Download een kopie als je het nog kunt, en zet daarna een back-up terug via Gegevens.";
     }
     if (status.reden === "prive") {
       return "Deze browser bewaart niets (vaak in een privévenster). Gebruik een gewone venster, of zet Zorgplan op je beginscherm.";

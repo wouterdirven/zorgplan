@@ -99,13 +99,13 @@
     });
     var select = $("#bestaande-hulpverlener");
     if (beschikbaar.length === 0) {
-      select.innerHTML = '<option value="">Geen andere hulpverleners in de lijst</option>';
+      select.innerHTML = '<option value="">Nog geen andere hulpverlener toegevoegd</option>';
       $("#koppel-hulpverlener").disabled = true;
     } else {
       select.innerHTML = Zorgplan.zorgverlenerOpties(
         { zorgverleners: beschikbaar },
         "",
-        "Kies uit de gedeelde lijst"
+        "Kies een hulpverlener die je al eerder toevoegde"
       );
       $("#koppel-hulpverlener").disabled = false;
     }
@@ -271,6 +271,19 @@
     renderActies();
     renderVragen();
     Zorgplan.toonSysteemBanner();
+  }
+
+  function focusNieuwPlan() {
+    if (Zorgplan.queryParam("nieuw") !== "1") {
+      return;
+    }
+    var naamVeld = $("#naam");
+    if (naamVeld) {
+      naamVeld.focus();
+    }
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, "", "persoon.html?id=" + encodeURIComponent(persoonId));
+    }
   }
 
   function bewaarOverMij() {
@@ -556,7 +569,7 @@
             aantal +
             (aantal === 1 ? " afspraak" : " afspraken") +
             "."
-          : "Deze hulpverlener verdwijnt uit dit plan. De gedeelde lijst blijft behouden.";
+          : "Deze hulpverlener verdwijnt uit dit plan. Je kunt die later weer toevoegen.";
         Zorgplan.toggleHidden($("#los-paneel"), false);
         $("#los-paneel").scrollIntoView({ block: "nearest", behavior: "auto" });
         return;
@@ -627,5 +640,6 @@
     });
 
     render();
+    focusNieuwPlan();
   });
 })();
