@@ -85,88 +85,18 @@
       .join("");
   }
 
-  function nieuwePersoon() {
+  function nieuwPlan() {
     var persoon = storage.addPersoon({ naam: "" });
     if (!storage.getOpslagStatus().ok) {
       Zorgplan.toonSysteemBanner();
       return;
     }
-    window.location.href = "persoon.html?id=" + encodeURIComponent(persoon.id);
-  }
-
-  function toonExportWaarschuwing() {
-    Zorgplan.toggleHidden($("#export-paneel"), false);
-    $("#export-paneel").querySelector("button, a").focus();
-  }
-
-  function downloadExport() {
-    Zorgplan.downloadText(Zorgplan.exportBestandsnaam(), storage.exportJSON());
-    storage.markExported();
-    Zorgplan.toggleHidden($("#export-paneel"), true);
-    Zorgplan.toonSysteemBanner();
-  }
-
-  function startImport() {
-    $("#import-bestand").click();
-  }
-
-  function onBestandGekozen(event) {
-    var file = event.target.files && event.target.files[0];
-    event.target.value = "";
-    if (!file) {
-      return;
-    }
-    var reader = new FileReader();
-    reader.onload = function () {
-      $("#import-paneel").dataset.json = String(reader.result || "");
-      Zorgplan.toggleHidden($("#import-paneel"), false);
-      Zorgplan.setStatus($("#import-status"), "Bestand geladen: " + file.name + ". Kies hoe je het wilt toevoegen.");
-    };
-    reader.onerror = function () {
-      Zorgplan.setStatus($("#import-status"), "Het bestand kon niet gelezen worden.");
-      Zorgplan.toggleHidden($("#import-paneel"), false);
-    };
-    reader.readAsText(file);
-  }
-
-  function importeer(mode) {
-    var json = $("#import-paneel").dataset.json || "";
-    try {
-      storage.importJSON(json, mode);
-      if (!storage.getOpslagStatus().ok) {
-        Zorgplan.setStatus($("#import-status"), "Importeren is niet bewaard. Controleer of deze browser gegevens mag opslaan.");
-        Zorgplan.toonSysteemBanner();
-        return;
-      }
-      Zorgplan.toggleHidden($("#import-paneel"), true);
-      $("#import-paneel").dataset.json = "";
-      render();
-      Zorgplan.toonSysteemBanner();
-    } catch (error) {
-      Zorgplan.setStatus($("#import-status"), error.message || "Importeren is mislukt.");
-    }
+    window.location.href = "persoon.html?id=" + encodeURIComponent(persoon.id) + "&nieuw=1";
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    $("#maak-eerste").addEventListener("click", nieuwePersoon);
-    $("#nieuwe-persoon").addEventListener("click", nieuwePersoon);
-    $("#exporteer").addEventListener("click", toonExportWaarschuwing);
-    $("#export-bevestig").addEventListener("click", downloadExport);
-    $("#export-annuleer").addEventListener("click", function () {
-      Zorgplan.toggleHidden($("#export-paneel"), true);
-    });
-    $("#importeer").addEventListener("click", startImport);
-    $("#import-bestand").addEventListener("change", onBestandGekozen);
-    $("#import-vervang").addEventListener("click", function () {
-      importeer("replace");
-    });
-    $("#import-voeg-toe").addEventListener("click", function () {
-      importeer("merge");
-    });
-    $("#import-annuleer").addEventListener("click", function () {
-      Zorgplan.toggleHidden($("#import-paneel"), true);
-      $("#import-paneel").dataset.json = "";
-    });
+    $("#maak-eerste").addEventListener("click", nieuwPlan);
+    $("#nieuw-plan").addEventListener("click", nieuwPlan);
     render();
   });
 })();

@@ -395,7 +395,7 @@
     try {
       parsed = JSON.parse(jsonString);
     } catch (error) {
-      throw new Error("Dit bestand is geen geldige JSON.");
+      throw new Error("Dit bestand is geen geldige back-up.");
     }
     var incoming = normalize(parsed);
     if (mode === "replace") {

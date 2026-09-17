@@ -9,7 +9,7 @@
     var data = storage.loadData();
     var lijst = $("#zorgverleners-lijst");
     if (data.zorgverleners.length === 0) {
-      lijst.innerHTML = "<p class=\"leeg-regel\">Nog geen zorgverleners. Voeg de eerste toe.</p>";
+      lijst.innerHTML = "<p class=\"leeg-regel\">Nog geen hulpverleners. Voeg de eerste toe.</p>";
       return;
     }
     lijst.innerHTML = data.zorgverleners

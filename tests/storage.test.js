@@ -67,7 +67,7 @@ test("openstaande vragen negeren afgevinkte vragen", function () {
   assert.strictEqual(storage.openstaandeVragen(data, persoon.id).length, 0);
 });
 
-test("hulpverlener loskoppelen houdt de gedeelde lijst", function () {
+test("hulpverlener loskoppelen blijft bewaard voor andere plannen", function () {
   var storage = loadStorage(memoryStorage());
   var persoon = storage.addPersoon({ naam: "Kim" });
   var hulp = storage.addZorgverlener({ naam: "Dokter", persoonIds: [persoon.id] });
