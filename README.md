@@ -54,6 +54,7 @@ Opslagtests:
 
 ```bash
 node tests/storage.test.js
+node tests/datum.test.js
 ```
 
 ## Bouwdocument

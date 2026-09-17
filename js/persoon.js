@@ -56,7 +56,7 @@
 
   function renderOverMij(persoon) {
     $("#naam").value = persoon.naam;
-    $("#geboortedatum").value = persoon.geboortedatum;
+    $("#geboortedatum").value = Zorgplan.formatEuropeanDate(persoon.geboortedatum);
     $("#notitie").value = persoon.notitie;
   }
 
@@ -274,9 +274,20 @@
   }
 
   function bewaarOverMij() {
+    var geboorteInvoer = $("#geboortedatum").value.trim();
+    var geboortedatum = "";
+    if (geboorteInvoer) {
+      var isoGeboorte = Zorgplan.isoDateFromInput(geboorteInvoer);
+      if (isoGeboorte === null) {
+        var huidig = storage.findById(storage.loadData().personen, persoonId);
+        geboortedatum = huidig ? huidig.geboortedatum : "";
+      } else {
+        geboortedatum = isoGeboorte;
+      }
+    }
     storage.updatePersoon(persoonId, {
       naam: $("#naam").value,
-      geboortedatum: $("#geboortedatum").value,
+      geboortedatum: geboortedatum,
       notitie: $("#notitie").value
     });
     data = storage.loadData();
@@ -328,14 +339,21 @@
     $("#afspraak-form").addEventListener("submit", function (event) {
       event.preventDefault();
       var form = event.target;
-      var datum = form.datum.value;
-      if (!datum) {
+      var parsed = Zorgplan.europeanDateTimeToIso(form.datum.value, form.uur.value);
+      if (!parsed.iso) {
+        if (!parsed.dateOk) {
+          form.datum.setCustomValidity("Gebruik dag/maand/jaar, bijvoorbeeld 17/09/2026.");
+          form.datum.reportValidity();
+        } else {
+          form.uur.setCustomValidity("Gebruik het 24-uursuur, bijvoorbeeld 14:30.");
+          form.uur.reportValidity();
+        }
         return;
       }
       var velden = {
         persoonId: persoonId,
         zorgverlenerId: form.zorgverlenerId.value,
-        datum: new Date(datum).toISOString(),
+        datum: parsed.iso,
         locatie: form.locatie.value
       };
       if (form.dataset.bewerkId) {
@@ -361,10 +379,16 @@
     $("#sessie-form").addEventListener("submit", function (event) {
       event.preventDefault();
       var form = event.target;
+      var sessieDatum = Zorgplan.isoDateFromInput(form.datum.value);
+      if (!sessieDatum) {
+        form.datum.setCustomValidity("Gebruik dag/maand/jaar, bijvoorbeeld 17/09/2026.");
+        form.datum.reportValidity();
+        return;
+      }
       var velden = {
         persoonId: persoonId,
         zorgverlenerId: form.zorgverlenerId.value,
-        datum: form.datum.value,
+        datum: sessieDatum,
         tekst: form.tekst.value
       };
       if (form.dataset.bewerkId) {
@@ -469,7 +493,8 @@
         }
         var afspraakForm = $("#afspraak-form");
         afspraakForm.dataset.bewerkId = id;
-        afspraakForm.datum.value = Zorgplan.toDateTimeLocal(afspraak.datum);
+        afspraakForm.datum.value = Zorgplan.formatEuropeanDate(afspraak.datum);
+        afspraakForm.uur.value = Zorgplan.formatEuropeanTime(afspraak.datum);
         afspraakForm.zorgverlenerId.value = afspraak.zorgverlenerId;
         afspraakForm.locatie.value = afspraak.locatie;
         zetBewerkKnop(afspraakForm, "Wijzigingen bewaren");
@@ -484,7 +509,7 @@
         }
         var sessieForm = $("#sessie-form");
         sessieForm.dataset.bewerkId = id;
-        sessieForm.datum.value = sessie.datum;
+        sessieForm.datum.value = Zorgplan.formatEuropeanDate(sessie.datum);
         sessieForm.zorgverlenerId.value = sessie.zorgverlenerId;
         sessieForm.tekst.value = sessie.tekst;
         zetBewerkKnop(sessieForm, "Wijzigingen bewaren");

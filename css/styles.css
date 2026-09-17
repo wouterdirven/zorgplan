@@ -260,6 +260,12 @@ a:hover {
   margin-top: 0.7rem;
 }
 
+.datum-tijd-rij {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(8.5rem, 0.85fr);
+  gap: 0.75rem;
+}
+
 .leeg-staat {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -675,6 +681,10 @@ a:hover {
   .actie-rij .btn,
   .persoon-kaart .btn {
     width: 100%;
+  }
+
+  .datum-tijd-rij {
+    grid-template-columns: 1fr;
   }
 }
 
